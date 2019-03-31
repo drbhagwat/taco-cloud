@@ -1,23 +1,51 @@
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS authorities;
+DROP TABLE IF EXISTS users_authorities;
+
+create table users (
+ username varchar(50) not NULL PRIMARY KEY,
+ password varchar(120) not null,
+ enabled boolean NOT NULL
+);
+
+create table authorities (
+ id bigint NOT NULL PRIMARY KEY,
+ username varchar(50) not NULL,
+ authority varchar(50) not null,
+ FOREIGN KEY (username) REFERENCES users (username)
+);
+
+/*
+create table users_authorities (
+ users_username varchar(50) not NULL,
+ authorities_id bigint not null,
+);
+*/
+
 create table if not exists Ingredient (
  id varchar(4) not null,
  name varchar(25) not null,
  type varchar(10) check (type in ('WRAP', 'PROTEIN', 'VEGGIES', 'CHEESE', 'SAUCE')) 
 );
+
 create table if not exists Taco (
- id identity,
+ id bigint NOT null,
  name varchar(50) not null,
  createdAt timestamp not null
 );
+
 create table if not exists Taco_Ingredients (
  taco bigint not null,
- ingredient varchar(4) not null
+ ingredient varchar(4) not NULL
 );
+
 alter table Taco_Ingredients
  add foreign key (taco) references Taco(id);
 alter table Taco_Ingredients
  add foreign key (ingredient) references Ingredient(id);
+
 create table if not exists Taco_Order (
- id identity,
+ id bigint NOT null,
  deliveryName varchar(50) not null,
  deliveryStreet varchar(50) not null,
  deliveryCity varchar(50) not null,
@@ -32,6 +60,7 @@ create table if not exists Taco_Order_Tacos (
  tacoOrder bigint not null,
  taco bigint not null
 );
+
 alter table Taco_Order_Tacos
  add foreign key (tacoOrder) references Taco_Order(id);
 alter table Taco_Order_Tacos

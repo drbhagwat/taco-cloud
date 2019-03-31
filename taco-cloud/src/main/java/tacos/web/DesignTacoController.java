@@ -1,10 +1,12 @@
 package tacos.web;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
+
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +30,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 @RequestMapping("/design")
 @SessionAttributes("order")
 public class DesignTacoController {
+  @Autowired
   private final IngredientRepository ingredientRepo;
+
+  @Autowired
   private TacoRepository designRepo;
 
   @ModelAttribute(name = "order")
@@ -47,19 +52,21 @@ public class DesignTacoController {
 	this.designRepo = designRepo;
   }
 
-
   @GetMapping
   public String showDesignForm(Model model) {
-	List<Ingredient> ingredients = new ArrayList<>();
-	ingredientRepo.findAll().forEach(i -> ingredients.add(i));
 
 	/*
 	 * Type[] types = Ingredient.Type.values();
 	 * 
 	 * for (Type type : types) { model.addAttribute(type.toString().toLowerCase(),
 	 * filterByType(ingredients, type)); }
-	 */	model.addAttribute("ingredients", ingredients);
-	model.addAttribute("taco", new Taco());
+	 */ //model.addAttribute("ingredients", ingredients);
+	Taco taco = new Taco();
+	List<Ingredient> ingredients = new ArrayList<>();
+	ingredientRepo.findAll().forEach(i -> ingredients.add(i));
+	taco.setIngredients(ingredients);
+
+	model.addAttribute("taco", taco);
 	return "design";
   }
 
@@ -68,6 +75,7 @@ public class DesignTacoController {
 	if (errors.hasErrors()) {
 	  return "design";
 	}
+	design.setCreatedAt(new Date());
 	Taco saved = designRepo.save(design);
 	order.addDesign(saved);
 	return "redirect:/orders/current";

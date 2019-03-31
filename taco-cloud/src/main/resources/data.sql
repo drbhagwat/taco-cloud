@@ -4,6 +4,11 @@ delete from Taco;
 delete from Taco_Order;
 delete from Ingredient;
 
+/*
+INSERT INTO users(username, password, enabled) values('dinesh', '{noop}bhagwat', true);
+INSERT INTO authorities(id, username, authority) values(1, 'dinesh', 'ROLE_ADMIN');
+*/
+
 insert into Ingredient (id, name, type)
  values ('FLTO', 'Flour Tortilla', 'WRAP');
 insert into Ingredient (id, name, type)

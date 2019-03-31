@@ -10,52 +10,32 @@
 	<img th:src="@{/images/TacoCloud.png}" />
 	<form method="POST" th:object="${taco}">
 		<div class="grid">
-			<div class="ingredient-group" id="wraps">
-				<h3>Designate your wrap:</h3>
-				<div th:each="ingredient : ${ingredients}">
-					<input type="checkbox" th:field="*{ingredients}"
-						th:value=${ingredient.id} /> <span> <label
-						th:text="${ingredient.name}"> </label></span><br /> 
-						<input type="hidden" th:field="*{ingredients}" th:value=${ingredient.name} >
-						<input type="hidden" th:field="*{ingredients}" th:value=${ingredient.type} >
+			<div th:each="ingredient, iStat : *{ingredients}">
+				<div th:if="${iStat.count} == '1'">
+					<h3>Designate your wrap:</h3>
 				</div>
-			</div>
-			<!-- 			<div class="ingredient-group" id="proteins">
-				<h3>Pick your protein:</h3>
-				<div th:each="ingredient : ${protein}">
-					<input name="ingredient" type="checkbox"
-						th:value="${ingredient.id}" /> <span
-						th:text="${ingredient.name}">INGREDIENT</span><br />
+				<div th:if="${iStat.count} == '3'">
+					<h3>Pick your protein:</h3>
 				</div>
-			</div>
-			<div class="ingredient-group" id="cheeses">
-				<h3>Choose your cheese:</h3>
-				<div th:each="ingredient : ${cheese}">
-					<input name="ingredient" type="checkbox"
-						th:value="${ingredient.id}" /> <span th:text="${ingredient.name}">INGREDIENT</span><br />
+				<div th:if="${iStat.count} == '5'">
+					<h3>Choose your cheese:</h3>
 				</div>
-			</div>
-			<div class="ingredient-group" id="veggies">
-				<h3>Determine your veggies:</h3>
-				<div th:each="ingredient : ${veggies}">
-					<input name="ingredient" type="checkbox"
-						th:value="${ingredient.id}" /> <span th:text="${ingredient.name}">INGREDIENT</span><br />
+				<div th:if="${iStat.count} == '7'">
+					<h3>Determine your veggies:</h3>
 				</div>
-			</div>
-			<div class="ingredient-group" id="sauces">
-				<h3>Select your sauce:</h3>
-				<div th:each="ingredient : ${sauce}">
-					<input name="ingredient" type="checkbox"
-						th:value="${ingredient.id}" /> <span th:text="${ingredient.name}">INGREDIENT</span><br />
+				<div th:if="${iStat.count} == '9'">
+					<h3>Select your sauce:</h3>
 				</div>
+				<input type="checkbox" th:field="*{ingredients}"
+					th:value=${ingredient.id} /> <span> <label
+					th:text="${ingredient.name}"> </label></span> <br />
 			</div>
 		</div>
- -->
-			<div>
-				<h3>Name your taco creation:</h3>
-				<input type="text" th:field="*{name}" /> <br />
-				<button>Submit your taco</button>
-			</div>
+		<div>
+			<h3>Name your taco creation:</h3>
+			<input type="text" th:field="*{name}" /> <br />
+			<button>Submit your taco</button>
+		</div>
 	</form>
 </body>
 </html>
