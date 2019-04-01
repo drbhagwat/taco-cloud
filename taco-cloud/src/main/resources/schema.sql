@@ -12,7 +12,8 @@ create table authorities (
  id bigint NOT NULL PRIMARY KEY,
  username varchar(50) not NULL,
  authority varchar(50) not null,
- FOREIGN KEY (username) REFERENCES users (username)
+users_username varchar(50) not NULL,
+ FOREIGN KEY (users_username) REFERENCES users (username)
 );
 
 /*
